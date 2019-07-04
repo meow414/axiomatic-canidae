@@ -29,12 +29,28 @@ app.get("/api/timestamp/:date?", function (req, res) {
         
         // it's not a unix timestamp string
         date = new Date(req.params.date);
-      } lse {
+      } else {
         
-        // it is a timestamp
+        // it is a unix timestamp
         date = new Date(unixTimestamp);
       }
+    }else {
+      
+      // the date string parameter is empty. 
+      // create a new date based on current time 
+      date = new Date(Date.now());
     }
+  //Initialize the response object, if Date is invalid
+    // this one will be returned
+
+    var response = date == "Invalid Date" ? 
+      { error: "Invalid Date" } :
+      { "unix": date.getTime(),
+        "utc": date.toUTCString()
+      };
+    
+    res.json(response);
+  
     });
 
 // 404 Not Found Middleware
