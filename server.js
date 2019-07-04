@@ -21,8 +21,21 @@ app.get("/", function (req, res) {
 
 // your first API endpoint... 
 app.get("/api/timestamp/:date?", function (req, res) {
-  res.json({greeting: 'hello API'});
-});
+    let date = null;
+    if (req.params.date !== undefined) {
+      // check if it is a unix timestamp...
+      var unixTimestamp = parseInt(req.params.date*1);
+        if (isNaN(unixTimestamp)) {
+        
+        // it's not a unix timestamp string
+        date = new Date(req.params.date);
+      } lse {
+        
+        // it is a timestamp
+        date = new Date(unixTimestamp);
+      }
+    }
+    });
 
 // 404 Not Found Middleware
 app.use(function(req, res, next) {
