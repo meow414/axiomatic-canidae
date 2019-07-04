@@ -20,11 +20,16 @@ app.get("/", function (req, res) {
 
 
 // your first API endpoint... 
-app.get("/api/hello", function (req, res) {
+app.get("/api/timestamp/:date?", function (req, res) {
   res.json({greeting: 'hello API'});
 });
 
-
+// 404 Not Found Middleware
+app.use(function(req, res, next) {
+  res.status(404)
+    .type('text')
+    .send('Not Found');
+});
 
 // listen for requests :)
 var listener = app.listen(process.env.PORT || 3000, function () {
